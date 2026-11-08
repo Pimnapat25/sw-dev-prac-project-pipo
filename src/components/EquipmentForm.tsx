@@ -93,11 +93,11 @@ export default function EquipmentForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+    <form onSubmit={handleSubmit} className="mt-8 grid gap-5 sm:grid-cols-2">
       <div>
         <label
           htmlFor="equipment-name"
-          className="mb-1 block text-sm font-semibold text-grey"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           Equipment name
         </label>
@@ -110,13 +110,13 @@ export default function EquipmentForm({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. Canon EOS R50"
-          className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+          className="min-h-12 w-full rounded-xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
         />
       </div>
       <div>
         <label
           htmlFor="equipment-category"
-          className="mb-1 block text-sm font-semibold text-grey"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           Category
         </label>
@@ -129,14 +129,14 @@ export default function EquipmentForm({
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="e.g. Camera"
-          className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+          className="min-h-12 w-full rounded-xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
         />
       </div>
 
-      <div>
+      <div className="sm:col-span-2">
         <label
           htmlFor="equipment-description"
-          className="mb-1 block text-sm font-semibold text-grey"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           Description
         </label>
@@ -149,13 +149,13 @@ export default function EquipmentForm({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Describe the equipment and what is included."
-          className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+          className="min-h-12 w-full rounded-xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
         />
       </div>
       <div>
         <label
           htmlFor="equipment-quantity"
-          className="mb-1 block text-sm font-semibold text-grey"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           Available quantity
         </label>
@@ -170,14 +170,14 @@ export default function EquipmentForm({
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           placeholder="e.g. 5"
-          className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+          className="min-h-12 w-full rounded-xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
         />
       </div>
 
       <div>
         <label
           htmlFor="equipment-rate"
-          className="mb-1 block text-sm font-semibold text-grey"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           Rental rate
         </label>
@@ -192,11 +192,14 @@ export default function EquipmentForm({
           value={rentalRate}
           onChange={(e) => setRentalRate(e.target.value)}
           placeholder="e.g. 250.00"
-          className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+          className="min-h-12 w-full rounded-xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
         />
       </div>
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p
+          role="alert"
+          className="rounded-xl border border-pink/20 bg-pink-light/40 px-4 py-3 text-sm leading-6 text-pink-dark sm:col-span-2"
+        >
           {error}
         </p>
       )}
@@ -204,7 +207,7 @@ export default function EquipmentForm({
       <button
         type="submit"
         disabled={loading || status === "loading"}
-        className="w-full rounded-full bg-pink px-6 py-2 font-semibold text-white disabled:opacity-60"
+        className="min-h-12 w-full rounded-full bg-pink-dark px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-pink-dark/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-dark disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2"
       >
         {loading ? "Saving…" : equipment ? "Save changes" : "Add equipment"}
       </button>
