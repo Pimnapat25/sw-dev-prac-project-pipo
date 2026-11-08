@@ -3,11 +3,21 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --cu-pink: #DE5C8E;
+  --cu-pink-light:#F8E1EA;
+  --cu-grey: #58595B;
+  --cu-copper: #AB5814;
+  --cu-gold: #E9C869;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-pink: var(--cu-pink);
+  --color-pink-light: var(--cu-pink-light);
+  --color-grey: var(--cu-grey);
+  --color-copper: var(--cu-copper);
+  --color-gold: var(--cu-gold);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
