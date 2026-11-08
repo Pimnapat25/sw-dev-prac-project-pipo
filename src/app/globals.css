@@ -3,11 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --cu-pink: #DE5C8E;
-  --cu-pink-light:#F8E1EA;
-  --cu-grey: #58595B;
-  --cu-copper: #AB5814;
-  --cu-gold: #E9C869;
+  --cu-pink: #de5c8e;
+  --cu-pink-light: #f8e1ea;
+  --cu-grey: #58595b;
+  --cu-copper: #ab5814;
+  --cu-gold: #e9c869;
 }
 
 @theme inline {

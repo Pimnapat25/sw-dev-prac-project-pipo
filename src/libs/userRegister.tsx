@@ -1,6 +1,5 @@
 import type { ApiResponse, AuthData, RegisterInput } from "@/types";
 
-
 export default async function userRegister(
   user: RegisterInput,
 ): Promise<ApiResponse<AuthData>> {
@@ -18,7 +17,9 @@ export default async function userRegister(
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error("Unable to register. Please check your details and try again.");
+    throw new Error(
+      "Unable to register. Please check your details and try again.",
+    );
   }
 
   return data;
