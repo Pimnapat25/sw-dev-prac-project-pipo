@@ -49,20 +49,22 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-pink-light px-4">
-      <section className="w-full max-w-md rounded-2xl bg-white p-8 shadow-md">
-        <h1 className="text-center text-2xl font-bold text-pink">
-          Create an account
-        </h1>
+    <main className="flex items-start justify-center px-6 py-12 sm:py-16">
+      <section className="w-full max-w-md rounded-3xl border border-pink/10 bg-white p-7 shadow-[0_8px_28px_-20px_#de5c8e] sm:p-10">
+        <header className="mb-7 rounded-2xl bg-pink-light/35 px-4 py-6 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight text-pink-dark sm:text-3xl">
+            Create an account
+          </h1>
 
-        <p className="mt-2 text-center text-sm text-grey">
-          Join us to manage your equipment rentals.
-        </p>
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <p className="mt-3 text-sm leading-7 text-grey">
+            Join us to manage your equipment rentals.
+          </p>
+        </header>
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label
               htmlFor="name"
-              className="mb-1 block text-sm font-semibold text-grey"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Full name
             </label>
@@ -76,13 +78,13 @@ export default function RegisterPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your full name"
-              className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+              className="min-h-12 w-full rounded-2xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
             />
           </div>
           <div>
             <label
               htmlFor="email"
-              className="mb-1 block text-sm font-semibold text-grey"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Email address
             </label>
@@ -96,14 +98,13 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@example.com"
-              className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+              className="min-h-12 w-full rounded-2xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
             />
           </div>
-
           <div>
             <label
               htmlFor="tel"
-              className="mb-1 block text-sm font-semibold text-grey"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Telephone number
             </label>
@@ -117,13 +118,13 @@ export default function RegisterPage() {
               value={tel}
               onChange={(e) => setTel(e.target.value)}
               placeholder="Your telephone number"
-              className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+              className="min-h-12 w-full rounded-2xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
             />
           </div>
           <div>
             <label
               htmlFor="password"
-              className="mb-1 block text-sm font-semibold text-grey"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Password
             </label>
@@ -138,13 +139,13 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
-              className="w-full rounded-xl border border-pink-light px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+              className="min-h-12 w-full rounded-2xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
             />
           </div>
           <div>
             <label
               htmlFor="role"
-              className="mb-1 block text-sm font-semibold text-grey"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Account role
             </label>
@@ -156,29 +157,34 @@ export default function RegisterPage() {
               onChange={(e) =>
                 setRole(e.target.value === "admin" ? "admin" : "member")
               }
-              className="w-full rounded-xl border border-pink-light bg-white px-4 py-2 text-grey outline-none focus:border-pink focus:ring-2 focus:ring-pink-light"
+              className="min-h-12 w-full rounded-2xl border border-pink/20 bg-pink-light/10 px-4 py-3 text-base text-foreground outline-none transition-colors placeholder:text-grey/60 hover:border-pink/50 focus:border-pink-dark focus:bg-white focus:ring-2 focus:ring-pink-light"
             >
               <option value="member">Member</option>
               <option value="admin">Admin</option>
             </select>
           </div>
           {error && (
-            <p role="alert" className="text-sm text-red-600">
+            <p
+              role="alert"
+              className="rounded-xl border border-pink/20 bg-pink-light/40 px-4 py-3 text-sm leading-6 text-pink-dark"
+            >
               {error}
             </p>
           )}
-
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-full bg-pink px-6 py-2 font-semibold text-white disabled:opacity-60"
+            className="min-h-12 w-full rounded-full bg-pink-dark px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-pink-dark/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-dark disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Creating account…" : "Create account"}
           </button>
         </form>
-        <p className="mt-6 text-center text-sm text-grey">
+        <p className="mt-6 pt-1 text-center text-sm text-grey">
           Already have an account?{" "}
-          <Link href="/login" className="font-semibold text-pink">
+          <Link
+            href="/login"
+            className="rounded font-semibold text-pink-dark underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-dark"
+          >
             Sign in
           </Link>
         </p>
