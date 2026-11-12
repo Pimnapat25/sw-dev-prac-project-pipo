@@ -82,6 +82,16 @@ export default async function EquipmentPage() {
                     </span>
                   </p>
                 </div>
+                {session?.user.role === "member" && equipment.quantity > 0 && (
+                  <div className="mt-5">
+                    <Link
+                      href={`/rentals/new?equipment=${equipment._id}`}
+                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-pink-dark px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-pink-dark/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-dark"
+                    >
+                      Request rental
+                    </Link>
+                  </div>
+                )}
                 {session?.user.role === "admin" && (
                   <div className="mt-5 flex flex-wrap items-start gap-3">
                     <Link

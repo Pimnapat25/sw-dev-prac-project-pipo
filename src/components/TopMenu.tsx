@@ -20,6 +20,15 @@ export default async function TopMenu() {
           >
             Equipment
           </Link>
+
+          {session && (
+            <Link
+              href="/rentals"
+              className="rounded text-sm font-medium text-grey transition-colors hover:text-pink-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-dark"
+            >
+              {session.user.role === "admin" ? "All rentals" : "My rentals"}
+            </Link>
+          )}
         </div>
         {session ? (
           <div className="flex items-center gap-4">
