@@ -1,3 +1,5 @@
+import type { ApiError } from "@/types";
+
 export default async function deleteEquipment(
   id: string,
   token: string,
@@ -13,8 +15,10 @@ export default async function deleteEquipment(
   );
 
   if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
     throw new Error(
-      "Unable to delete equipment. Please check your admin access and try again.",
+      (data as ApiError).error ||
+        "Unable to delete equipment. Please check your admin access and try again.",
     );
   }
 }

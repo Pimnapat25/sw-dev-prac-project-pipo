@@ -1,11 +1,15 @@
 // Mirrors backend rental rules so users get feedback before submitting.
-// Dates are YYYY-MM-DD strings compared in UTC, same as the backend.
+// Dates are YYYY-MM-DD strings. "Today" is the Asia/Bangkok calendar day so
+// users in Thailand are not offered yesterday between 00:00 and 06:59.
+// Note: the backend still compares against the UTC day, which is never later
+// than the Bangkok day, so anything accepted here is accepted there too.
 export const MAX_QTY_PER_REQUEST = 3;
 export const MAX_RENTAL_DAYS = 7;
 const DAY_MS = 24 * 60 * 60 * 1000;
+const BANGKOK_OFFSET_MS = 7 * 60 * 60 * 1000;
 
-export function todayUTC(now: Date = new Date()): string {
-  return now.toISOString().slice(0, 10);
+export function todayBangkok(now: Date = new Date()): string {
+  return new Date(now.getTime() + BANGKOK_OFFSET_MS).toISOString().slice(0, 10);
 }
 
 export default function validateRental(
@@ -27,7 +31,7 @@ export default function validateRental(
   if (!startDate || !returnDate) {
     return "Start and return dates are required.";
   }
-  if (startDate < todayUTC(now)) {
+  if (startDate < todayBangkok(now)) {
     return "Start date cannot be in the past.";
   }
   if (returnDate < startDate) {

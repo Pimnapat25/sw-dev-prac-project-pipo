@@ -1,4 +1,4 @@
-import type { ApiResponse, Equipment, EquipmentUpdate } from "@/types";
+import type { ApiError, ApiResponse, Equipment, EquipmentUpdate } from "@/types";
 
 export default async function updateEquipment(
   id: string,
@@ -21,7 +21,8 @@ export default async function updateEquipment(
 
   if (!response.ok) {
     throw new Error(
-      "Unable to update equipment. Please check your details and admin access.",
+      (data as ApiError).error ||
+        "Unable to update equipment. Please check your details and admin access.",
     );
   }
 

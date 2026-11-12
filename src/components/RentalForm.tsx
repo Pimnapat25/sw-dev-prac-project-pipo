@@ -7,7 +7,7 @@ import createRental from "@/libs/createRental";
 import updateRental from "@/libs/updateRental";
 import validateRental, {
   MAX_QTY_PER_REQUEST,
-  todayUTC,
+  todayBangkok,
 } from "@/libs/validateRental";
 import type { Equipment, Rental } from "@/types";
 
@@ -31,10 +31,10 @@ export default function RentalForm({
   );
   const [quantity, setQuantity] = useState(String(rental?.quantity ?? 1));
   const [startDate, setStartDate] = useState(
-    rental?.startDate.slice(0, 10) ?? todayUTC(),
+    rental?.startDate.slice(0, 10) ?? todayBangkok(),
   );
   const [returnDate, setReturnDate] = useState(
-    rental?.returnDate.slice(0, 10) ?? todayUTC(),
+    rental?.returnDate.slice(0, 10) ?? todayBangkok(),
   );
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -143,7 +143,7 @@ export default function RentalForm({
         <input
           id="rental-start"
           type="date"
-          min={todayUTC()}
+          min={todayBangkok()}
           required
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
@@ -158,7 +158,7 @@ export default function RentalForm({
         <input
           id="rental-return"
           type="date"
-          min={startDate || todayUTC()}
+          min={startDate || todayBangkok()}
           required
           value={returnDate}
           onChange={(e) => setReturnDate(e.target.value)}

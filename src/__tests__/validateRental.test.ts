@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import validateRental from "../libs/validateRental.ts";
+import validateRental, { todayBangkok } from "../libs/validateRental.ts";
 
 const now = new Date("2026-11-05T10:00:00Z");
 const ok = { quantity: 1, startDate: "2026-11-05", returnDate: "2026-11-06" };
@@ -23,3 +23,15 @@ test("allows exactly 7 days", () =>
   assert.equal(validateRental({ ...ok, returnDate: "2026-11-12" }, 5, now), null));
 test("rejects over 7 days", () =>
   assert.match(validateRental({ ...ok, returnDate: "2026-11-13" }, 5, now)!, /7 days/));
+test("uses the Bangkok day for today (UTC evening is already tomorrow)", () => {
+  const lateUtc = new Date("2026-11-05T20:00:00Z"); // 2026-11-06 03:00 in Bangkok
+  assert.match(validateRental(ok, 5, lateUtc)!, /past/);
+  assert.equal(
+    validateRental({ ...ok, startDate: "2026-11-06", returnDate: "2026-11-06" }, 5, lateUtc),
+    null,
+  );
+});
+test("todayBangkok rolls over at 17:00 UTC", () => {
+  assert.equal(todayBangkok(new Date("2026-11-05T16:59:00Z")), "2026-11-05");
+  assert.equal(todayBangkok(new Date("2026-11-05T17:00:00Z")), "2026-11-06");
+});
