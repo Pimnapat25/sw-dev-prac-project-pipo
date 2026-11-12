@@ -36,8 +36,8 @@ const STEPS: {
 ];
 
 const floatingGear = [
-  { category: "Camera", pos: "left-[6%] top-[8%]", rot: "-12deg", delay: "0s" },
-  { category: "Projector", pos: "right-[4%] top-[12%]", rot: "10deg", delay: "-1.5s" },
+  { category: "Camera", pos: "left-[28%] bottom-[18%]", rot: "-12deg", delay: "0s" },
+  { category: "Projector", pos: "right-[6%] top-[40%]", rot: "10deg", delay: "-1.5s" },
   { category: "Notebook", pos: "left-[10%] bottom-[10%]", rot: "8deg", delay: "-3s" },
   { category: "Sports", pos: "right-[10%] bottom-[8%]", rot: "-8deg", delay: "-2s" },
 ];
@@ -65,7 +65,7 @@ export default async function Home() {
         aria-labelledby="hero-title"
         className="relative isolate overflow-hidden rounded-[2.5rem] bg-linear-to-b from-pink/35 via-pink-light to-pink-light"
       >
-        <div className="relative flex min-h-[40rem] flex-col justify-between gap-8 p-6 sm:p-10">
+        <div className="relative flex min-h-[44rem] flex-col justify-between gap-8 p-6 sm:p-10">
           <div className="relative z-10 flex flex-col justify-between gap-6 lg:flex-row">
             <div className="max-w-md">
               <p className="glass inline-flex rounded-full px-4 py-2 text-sm font-semibold text-pink-dark">
@@ -81,9 +81,24 @@ export default async function Home() {
                 Browse equipment <span aria-hidden="true">↗</span>
               </Link>
             </div>
-            <p className="max-w-56 text-base font-medium leading-7 text-grey lg:text-right">
-              Up to 3 items per request, up to 7 days.
-            </p>
+            <div className="glass flex h-fit gap-3 self-start rounded-3xl p-3">
+              {[
+                { value: "3", label: "items max per request" },
+                { value: "7", label: "days max per rental" },
+              ].map((rule) => (
+                <div
+                  key={rule.label}
+                  className="flex items-center gap-3 rounded-2xl bg-white/80 px-4 py-3"
+                >
+                  <span className="grid size-12 place-items-center rounded-full bg-gold text-2xl font-black text-grey">
+                    {rule.value}
+                  </span>
+                  <span className="max-w-24 text-sm font-bold leading-5 text-pink-dark">
+                    {rule.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* giant word behind Snappy and the floating gear */}
