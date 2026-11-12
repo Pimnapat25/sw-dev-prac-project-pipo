@@ -86,7 +86,7 @@ export default async function Home() {
               ].map((rule) => (
                 <div
                   key={rule.label}
-                  className="glass flex items-center gap-3 rounded-2xl px-3 py-2"
+                  className="flex items-center gap-3"
                 >
                   <span className="grid size-11 place-items-center rounded-full bg-gold text-xl font-black text-grey">
                     {rule.value}
@@ -102,9 +102,10 @@ export default async function Home() {
           {/* Snappy with the gear at the corners of its own box, so it scales on every screen */}
           <div
             aria-hidden="true"
-            className="pointer-events-none relative mx-auto aspect-square w-full max-w-[26rem]"
+            className="@container pointer-events-none relative mx-auto aspect-square w-full max-w-[26rem]"
           >
-            <p className="absolute inset-0 flex select-none items-center justify-center text-[clamp(4.5rem,13vw,8.5rem)] font-black leading-none tracking-tighter text-white/90">
+            {/* sized in container units so the word keeps its ratio to Snappy's box on every screen */}
+            <p className="absolute inset-0 flex select-none items-center justify-center text-[40cqw] font-black leading-none tracking-tighter text-white/90">
               RENT
             </p>
             {floatingGear.map((g) => (
