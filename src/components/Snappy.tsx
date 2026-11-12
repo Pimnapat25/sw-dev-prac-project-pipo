@@ -161,13 +161,15 @@ export default function Snappy({
         <Eye pose={pose} />
         <circle cx={66} cy={142} r={8} fill="#fff" opacity={0.45} />
         <circle cx={134} cy={142} r={8} fill="#fff" opacity={0.45} />
-        <path
-          d={pose === "confused" ? "M86 152q7-6 14 0t14 0" : "M84 148q5 7 10 0t10 0t10 0t6 -1"}
-          fill="none"
-          stroke={INK}
-          strokeWidth={3.5}
-          strokeLinecap="round"
-        />
+        {pose === "confused" ? (
+          <path d="M86 152q7-6 14 0t14 0" fill="none" stroke={INK} strokeWidth={3.5} strokeLinecap="round" />
+        ) : (
+          <g>
+            {/* big open smile with a little tongue */}
+            <path d="M82 145Q100 172 118 145Z" fill={INK} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+            <path d="M91 156Q100 150 109 156Q100 163 91 156Z" fill="#F48FB1" />
+          </g>
+        )}
         <Extras pose={pose} />
       </g>
     </svg>
