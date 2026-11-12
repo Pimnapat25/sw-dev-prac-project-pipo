@@ -13,7 +13,3 @@ export class NotFoundError extends Error {
     this.name = "NotFoundError";
   }
 }
-
-export function errorMessage(error: unknown, fallback: string): string {
-  return error instanceof Error ? error.message : fallback;
-}
