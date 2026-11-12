@@ -5,7 +5,13 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import deleteRental from "@/libs/deleteRental";
 
-export default function DeleteRentalButton({ id }: { id: string }) {
+export default function DeleteRentalButton({
+  id,
+  redirectTo,
+}: {
+  id: string;
+  redirectTo?: string;
+}) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -24,6 +30,7 @@ export default function DeleteRentalButton({ id }: { id: string }) {
     setLoading(true);
     try {
       await deleteRental(id, session.user.token);
+      if (redirectTo) router.push(redirectTo);
       router.refresh();
     } catch (err) {
       setError(
