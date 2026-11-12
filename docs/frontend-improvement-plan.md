@@ -65,6 +65,29 @@ Accessibility notes:
 - Personality: **clumsy and funny** — trips over its gold strap, sweat drop, wobbly smile. Errors feel playful, not scary.
 - Copy tone examples: error "Oops, Snappy tripped! Try again?", empty list "Nothing rented yet… Snappy is bored.", success "Snap! Request saved."
 
+### Design references (collecting — more coming from user)
+1. **Hero style** (TerraElix supplement site): giant word behind a centered 3D product, glass pill nav, glass thumbnail strip bottom-left, short tagline right, trust badge bottom-right.
+   → Ours: giant "RENT" / "EQUIPMENT" in light pink, clay-3D camera (Snappy) + floating gear centre, category thumbnails bottom-left, live "N items available" badge from API.
+2. **Liquid glass navbar** (`liquid-glass-navbar.tsx`, WebGL water pill, no deps, CSS fallback).
+   → Replaces `TopMenu`. Wrap in a client component using `next/link` + `usePathname` for the active item. Items: Home, Equipment, My rentals, Sign in / profile. Tone `light`.
+3. **Dish orbit carousel** (`dish-orbit-carousel.tsx`, needs `gsap`).
+   → Featured-equipment showcase on Home only. Map: title=category, subtitle=name, image=category clay render, accent=palette colour; drop rating/chef/likes/food buttons → "Request rental" / "View details".
+   → Performance cautions: GSAP + ScrollTrigger (~70 KB gz), scroll-pinning hijacks page scroll, embedded base64 font. Load with `next/dynamic`, pass `fontSrc={null}`, consider turning off scroll pinning.
+
+4. **Suggested extras (to confirm with user):**
+   - Equipment cards: category clay image *pops out* above the card edge, gold "N left" badge, "฿/day", tilt on hover.
+   - Category filter: pill chips using the same liquid-glass indicator as the navbar.
+   - "How it works" bento (3 tiles, pink / white / gold) with Snappy poses.
+   - Rental form as 3 steps (pick gear → dates → confirm) with a date-range picker that greys out days past 7, a 1–3 quantity stepper, and a live summary card (qty × rate × days).
+   - My rentals as ticket cards (perforated edge, status chip Upcoming / Active / Past, estimated total).
+   - Auth pages split: Snappy waving + glass form.
+   - Pink shimmer skeleton loaders, Snappy toasts, squishy button press.
+
+### Component setup notes
+- Project: Next.js 16 + TypeScript + Tailwind v4 — OK. **No shadcn** (`components.json` missing).
+- Alias `@/*` → `src/*`, so `@/components/ui/...` = `src/components/ui/`. Create that folder for third-party / generic UI pieces (keeps them apart from app components like `RentalForm`; shadcn CLI and 21st.dev snippets import from that path).
+- shadcn init is optional; only needed if we pull shadcn-based components later (`npx shadcn@latest init`).
+
 ## Part 3 — Order of work
 1. F1, F2, F6 (fixes users hit first)
 2. Design tokens (colours, radius, shadows, type) in `globals.css`
