@@ -1,4 +1,5 @@
 import type { ApiResponse, Rental } from "@/types";
+import { UnauthorizedError } from "@/libs/apiErrors";
 
 export default async function getRentals(
   token: string,
@@ -8,6 +9,7 @@ export default async function getRentals(
     cache: "no-store",
   });
 
+  if (response.status === 401) throw new UnauthorizedError();
   if (!response.ok) {
     throw new Error("Unable to load rental requests.");
   }

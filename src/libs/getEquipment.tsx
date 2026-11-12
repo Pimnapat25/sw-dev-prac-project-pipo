@@ -1,4 +1,5 @@
 import type { ApiResponse, Equipment } from "@/types";
+import { NotFoundError } from "@/libs/apiErrors";
 
 export default async function getEquipment(
   id: string,
@@ -8,6 +9,7 @@ export default async function getEquipment(
     { cache: "no-store" },
   );
 
+  if (response.status === 404) throw new NotFoundError();
   if (!response.ok) {
     throw new Error("Failed to fetch equipment details");
   }
