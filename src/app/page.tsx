@@ -36,7 +36,7 @@ const STEPS: {
 ];
 
 const floatingGear = [
-  { category: "Camera", pos: "left-[28%] bottom-[18%]", rot: "-12deg", delay: "0s" },
+  { category: "Camera", pos: "left-[13%] top-[52%]", rot: "-12deg", delay: "0s" },
   { category: "Projector", pos: "right-[6%] top-[40%]", rot: "10deg", delay: "-1.5s" },
   { category: "Notebook", pos: "left-[10%] bottom-[10%]", rot: "8deg", delay: "-3s" },
   { category: "Sports", pos: "right-[10%] bottom-[8%]", rot: "-8deg", delay: "-2s" },
