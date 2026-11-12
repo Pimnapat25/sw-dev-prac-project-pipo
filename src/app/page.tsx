@@ -130,12 +130,15 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="relative z-10 flex flex-wrap items-end justify-between gap-4">
-            <ul aria-label="Equipment categories" className="flex flex-wrap gap-3">
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-end">
+            <ul
+              aria-label="Equipment categories"
+              className="grid w-full flex-1 grid-cols-2 gap-3 sm:grid-cols-4"
+            >
               {categories.map((category) => (
                 <li
                   key={category}
-                  className="glass flex items-center gap-2 rounded-2xl p-2 pr-4 text-sm font-semibold text-grey"
+                  className="glass flex min-w-0 items-center justify-center gap-2 rounded-2xl p-2 pr-4 text-sm font-semibold text-grey"
                 >
                   <CategoryIcon category={category} className="size-10" />
                   {category}
@@ -143,7 +146,7 @@ export default async function Home() {
               ))}
             </ul>
             {apiUp && (
-              <p className="glass rounded-2xl px-5 py-3 text-grey">
+              <p className="glass self-end rounded-2xl px-5 py-3 text-grey lg:shrink-0">
                 <span className="text-3xl font-extrabold tabular-nums text-pink-dark">
                   {availableNow.toLocaleString("en-US")}
                 </span>{" "}

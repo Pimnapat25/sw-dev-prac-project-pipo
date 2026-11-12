@@ -94,8 +94,17 @@ export default function MainNav({
         />
       </div>
       {user && (
-        <p className="glass pointer-events-auto hidden max-w-40 truncate rounded-full px-4 py-2 text-sm font-semibold text-pink-dark md:block">
-          Hi, {user.name}
+        <p className="glass pointer-events-auto hidden max-w-56 items-center gap-2 rounded-full py-1.5 pl-1.5 pr-4 text-sm font-semibold text-pink-dark md:flex">
+          <span
+            aria-hidden="true"
+            className="grid size-8 shrink-0 place-items-center rounded-full bg-pink text-white"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="8.5" r="3.8" />
+              <path d="M4.8 20c1.2-3.4 4-5 7.2-5s6 1.6 7.2 5" />
+            </svg>
+          </span>
+          <span className="truncate">Hi, {user.name}</span>
         </p>
       )}
     </div>
