@@ -1,6 +1,15 @@
 // Clay-style category illustrations as tiny SVG strings (viewBox 0 0 120 120).
 // Reused by cards, the home hero and the carousel, so no image files to load.
-export type CategoryKind = "camera" | "projector" | "laptop" | "ball" | "box";
+export type CategoryKind =
+  | "camera"
+  | "projector"
+  | "laptop"
+  | "ball"
+  | "box"
+  | "actioncam"
+  | "minipro"
+  | "racket"
+  | "soccer";
 
 const P = "#DE5C8E";
 const L = "#F8E1EA";
@@ -49,6 +58,35 @@ const ART: Record<CategoryKind, string> = {
     `<rect x="52" y="30" width="16" height="68" fill="${G}"/>` +
     `<path d="M60 30q-18-20-24-8t24 8Zm0 0q18-20 24-8t-24 8Z" fill="${G}"/>` +
     shine(30, 66, 10, 4),
+  actioncam:
+    shadow +
+    `<rect x="30" y="30" width="60" height="58" rx="16" fill="${P}"/>` +
+    `<rect x="38" y="36" width="30" height="10" rx="5" fill="${L}"/>` +
+    `<rect x="74" y="38" width="10" height="14" rx="4" fill="${G}"/>` +
+    shine(42, 40, 8, 3) +
+    `<circle cx="60" cy="64" r="19" fill="${L}"/><circle cx="60" cy="64" r="12" fill="${D}"/>` +
+    `<circle cx="56" cy="60" r="3.5" fill="#fff"/>` +
+    `<rect x="46" y="88" width="28" height="10" rx="3" fill="${G}"/>`,
+  minipro:
+    shadow +
+    `<rect x="26" y="34" width="68" height="62" rx="20" fill="${L}" stroke="${P}" stroke-width="3"/>` +
+    shine(42, 46, 10, 4) +
+    `<circle cx="60" cy="62" r="19" fill="${G}"/><circle cx="60" cy="62" r="12" fill="${D}"/>` +
+    `<circle cx="56" cy="58" r="3.5" fill="#fff"/>` +
+    `<path d="M42 86h36" stroke="${P}" stroke-width="4" stroke-linecap="round"/>`,
+  racket:
+    shadow +
+    `<g transform="rotate(35 60 56)"><rect x="55" y="62" width="10" height="40" rx="5" fill="${G}"/>` +
+    `<ellipse cx="60" cy="38" rx="24" ry="30" fill="${L}" stroke="${P}" stroke-width="5"/>` +
+    `<path d="M60 10v56M40 24h40M38 38h44M40 52h40" stroke="${P}" stroke-width="2" opacity=".55"/></g>` +
+    `<path d="M84 82l8 16 8-16Z" fill="#fff" stroke="${P}" stroke-width="2.5" stroke-linejoin="round"/>` +
+    `<circle cx="92" cy="80" r="6" fill="${G}"/>`,
+  soccer:
+    shadow +
+    `<circle cx="60" cy="58" r="40" fill="#fff" stroke="${P}" stroke-width="3"/>` +
+    `<path d="M60 40l17 12-6 20H49l-6-20Z" fill="${D}"/>` +
+    `<path d="M60 40V20M77 52l19-6M71 72l12 16M49 72L37 88M43 52l-19-6" stroke="${D}" stroke-width="3" stroke-linecap="round"/>` +
+    shine(44, 34, 10, 5),
 };
 
 export function categoryKind(category: string): CategoryKind {
@@ -60,8 +98,18 @@ export function categoryKind(category: string): CategoryKind {
   return "box";
 }
 
-export function categoryArt(category: string): string {
-  return ART[categoryKind(category)];
+// Pick the most specific illustration: by item name first, then by category.
+export function itemKind(category: string, name?: string): CategoryKind {
+  const n = (name ?? "").toLowerCase();
+  if (/racket|badminton|shuttle/.test(n)) return "racket";
+  if (/futsal|soccer|football/.test(n)) return "soccer";
+  if (/gopro|action/.test(n)) return "actioncam";
+  if (/mogo|mini|portable/.test(n) && categoryKind(category) === "projector") return "minipro";
+  return categoryKind(category);
+}
+
+export function categoryArt(category: string, name?: string): string {
+  return ART[itemKind(category, name)];
 }
 
 export function categoryImage(category: string): string {

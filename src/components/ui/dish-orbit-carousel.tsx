@@ -35,6 +35,8 @@ export type Dish = {
   rating: number
   chef: string
   kitchen?: string
+  /** Small caption beside the big number badge. */
+  ratingLabel?: string
   description: string
   likes: number
   ingredients?: string[]
@@ -53,7 +55,7 @@ export type DishOrbitCarouselProps = {
   pinScroll?: boolean
   playLabel?: string
   orderLabel?: string
-  tabLabels?: [string, string]
+  tabLabels?: string[]
   eyebrowFallback?: (index: number) => string
   likesLabel?: string
   onPlay?: (dish: Dish, index: number) => void
@@ -167,6 +169,7 @@ const CSS =
   ".dsh-badge{position:absolute;left:0;top:0;width:46px;height:62px;border-radius:10px}" +
   ".dsh-badge svg{position:absolute;left:17px;bottom:9px;width:12px;height:12px;fill:var(--color-foreground);opacity:.8}" +
   ".dsh-num{position:absolute;left:10px;top:4px;font-size:36px;font-weight:700;letter-spacing:-.04em;line-height:1}" +
+  ".dsh-rl{position:absolute;left:58px;top:22px;font-size:15px;font-weight:600;letter-spacing:-.01em}" +
   ".dsh-chef{font-size:19px;font-weight:600;letter-spacing:-.01em;margin:0}" +
   ".dsh-kit{font-size:10.5px;color:var(--color-grey);margin:3px 0 12px}" +
   ".dsh-desc{font-size:12.5px;line-height:1.38;margin:0;min-height:52px}" +
@@ -469,13 +472,19 @@ export function DishOrbitCarousel({
                   <div className="dsh-rate">
                     <div className="dsh-badge" style={{ background: d.accent }} />
                     <span className="dsh-num">{d.rating.toLocaleString("en-US")}</span>
+                    {d.ratingLabel ? <span className="dsh-rl">{d.ratingLabel}</span> : null}
                   </div>
                   <p className="dsh-chef">{d.chef}</p>
                   <p className="dsh-kit">{d.kitchen ?? " "}</p>
-                  {tab === 0 || !d.ingredients?.length ? (
-                    <p className="dsh-desc">{d.description}</p>
-                  ) : (
+                  {tabLabels.length > 1 && tab !== 0 && d.ingredients?.length ? (
                     <ul className="dsh-ing">{d.ingredients.map((x) => <li key={x}>{x}</li>)}</ul>
+                  ) : (
+                    <>
+                      <p className="dsh-desc">{d.description}</p>
+                      {tabLabels.length === 1 && d.ingredients?.length ? (
+                        <ul className="dsh-ing" style={{ minHeight: 0, marginTop: 10 }}>{d.ingredients.map((x) => <li key={x}>{x}</li>)}</ul>
+                      ) : null}
+                    </>
                   )}
                   <div className="dsh-react">
                     <button type="button" className="dsh-btn dsh-like" aria-pressed={!!liked[i]} tabIndex={i === index ? 0 : -1}

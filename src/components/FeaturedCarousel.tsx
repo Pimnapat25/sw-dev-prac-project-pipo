@@ -33,7 +33,7 @@ export default function FeaturedCarousel({
     eyebrow: "Featured equipment",
     rating: e.quantity,
     chef: `${formatBaht(e.rentalRate)} / day`,
-    kitchen: `${e.quantity} available`,
+    ratingLabel: "available",
     description: e.description,
     likes: 0,
     ingredients: [e.category, "Up to 3 per request", "Up to 7 days"],
@@ -45,16 +45,19 @@ export default function FeaturedCarousel({
       dishes={dishes}
       height="42rem"
       pinScroll={false}
-      orderLabel={role === "admin" ? "View catalogue" : "Request rental"}
-      tabLabels={["Overview", "Details"]}
+      orderLabel="Request rental"
+      tabLabels={["Overview"]}
       eyebrowFallback={() => "Featured equipment"}
       likesLabel="likes"
-      onOrder={(_, index) => {
-        const id = equipments[index]?._id;
-        if (role === "member") router.push(`/rentals/new?equipment=${id}`);
-        else if (role === "admin") router.push("/equipment");
-        else router.push("/login");
-      }}
+      onOrder={
+        role === "admin"
+          ? undefined
+          : (_, index) => {
+              const id = equipments[index]?._id;
+              if (role === "member") router.push(`/rentals/new?equipment=${id}`);
+              else router.push("/login");
+            }
+      }
     />
   );
 }

@@ -47,21 +47,25 @@ export default function EquipmentCatalogue({
             key={equipment._id}
             className="glass tilt relative flex min-w-0 flex-col rounded-card p-6 pt-14"
           >
-            <div className="absolute -top-9 left-6 flex size-24 items-center justify-center rounded-3xl bg-linear-to-br from-white to-pink-light shadow-clay">
-              <CategoryIcon category={equipment.category} className="size-20" />
+            <CategoryIcon
+              category={equipment.category}
+              name={equipment.name}
+              className="absolute -top-9 left-5 size-24 drop-shadow-md"
+            />
+            <div className="absolute right-5 top-5 flex flex-col items-end gap-2">
+              <p
+                className={`rounded-full px-3 py-1 text-sm font-bold ${
+                  equipment.quantity > 0 ? "bg-gold text-grey" : "bg-grey/15 text-grey"
+                }`}
+              >
+                {equipment.quantity > 0 ? `${equipment.quantity} left` : "Out"}
+              </p>
+              <p className="max-w-full break-words rounded-full bg-pink-light px-3 py-1 text-xs font-semibold text-pink-dark">
+                {equipment.category}
+              </p>
             </div>
-            <p
-              className={`absolute right-5 top-5 rounded-full px-3 py-1 text-sm font-bold ${
-                equipment.quantity > 0 ? "bg-gold text-grey" : "bg-grey/15 text-grey"
-              }`}
-            >
-              {equipment.quantity > 0 ? `${equipment.quantity} left` : "Out"}
-            </p>
 
-            <p className="w-fit max-w-full break-words rounded-full bg-pink-light px-3 py-1 text-xs font-semibold text-pink-dark">
-              {equipment.category}
-            </p>
-            <h2 className="mt-3 break-words text-xl font-bold text-pink-dark">
+            <h2 className="mt-5 break-words text-xl font-bold text-pink-dark">
               {equipment.name}
             </h2>
             <p className="mt-2 flex-1 break-words whitespace-pre-line text-sm leading-7 text-grey">
