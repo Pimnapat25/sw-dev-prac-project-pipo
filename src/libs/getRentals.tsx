@@ -1,5 +1,6 @@
 import type { ApiResponse, Rental } from "@/types";
 import { UnauthorizedError } from "@/libs/apiErrors";
+import { withIcon } from "@/libs/equipmentIcon";
 
 export default async function getRentals(
   token: string,
@@ -14,5 +15,9 @@ export default async function getRentals(
     throw new Error("Unable to load rental requests.");
   }
 
-  return await response.json();
+  const body: ApiResponse<Rental[]> = await response.json();
+  return {
+    ...body,
+    data: body.data.map((r) => ({ ...r, equipment: withIcon(r.equipment) })),
+  };
 }

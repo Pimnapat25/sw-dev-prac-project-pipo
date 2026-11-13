@@ -1,5 +1,6 @@
 import type { ApiResponse, Equipment } from "@/types";
 import { NotFoundError } from "@/libs/apiErrors";
+import { withIcon } from "@/libs/equipmentIcon";
 
 export default async function getEquipment(
   id: string,
@@ -14,5 +15,6 @@ export default async function getEquipment(
     throw new Error("Failed to fetch equipment details");
   }
 
-  return await response.json();
+  const body: ApiResponse<Equipment> = await response.json();
+  return { ...body, data: withIcon(body.data) };
 }

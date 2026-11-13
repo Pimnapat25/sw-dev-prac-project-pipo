@@ -16,11 +16,14 @@ export default function EquipmentCatalogue({
   role?: "admin" | "member";
 }) {
   const categories = ["All", ...new Set(equipments.map((e) => e.category))];
-  const [active, setActive] = useState(0);
+  const [selected, setSelected] = useState("All");
+  // A deleted last item removes its category; fall back to "All" instead of showing nothing.
+  const current = categories.includes(selected) ? selected : "All";
+  const active = categories.indexOf(current);
   const visible =
-    active === 0
+    current === "All"
       ? equipments
-      : equipments.filter((e) => e.category === categories[active]);
+      : equipments.filter((e) => e.category === current);
 
   return (
     <>
@@ -31,7 +34,7 @@ export default function EquipmentCatalogue({
             compact={false}
             items={categories.map((label) => ({ label, fx: "none" as const }))}
             active={active}
-            onChange={(i) => setActive(i)}
+            onChange={(i) => setSelected(categories[i])}
             className="shrink-0"
           />
         </div>
@@ -50,6 +53,7 @@ export default function EquipmentCatalogue({
             <CategoryIcon
               category={equipment.category}
               name={equipment.name}
+              icon={equipment.icon}
               className="absolute -top-9 left-5 size-24 drop-shadow-md"
             />
             <div className="absolute right-5 top-5 flex flex-col items-end gap-2">

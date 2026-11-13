@@ -164,7 +164,12 @@ export default function RentalForm({
                       disabled={out}
                       onChange={() => pickEquipment(equipment)}
                     />
-                    <CategoryIcon category={equipment.category} className="size-14 shrink-0" />
+                    <CategoryIcon
+                      category={equipment.category}
+                      name={equipment.name}
+                      icon={equipment.icon}
+                      className="size-14 shrink-0"
+                    />
                     <span className="min-w-0">
                       <span className="block break-words text-sm font-bold text-pink-dark">
                         {equipment.name}

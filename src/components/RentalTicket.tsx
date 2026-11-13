@@ -28,6 +28,8 @@ export default function RentalTicket({
       <div className="flex items-start gap-4 p-6 pb-5">
         <CategoryIcon
           category={equipment?.category ?? ""}
+          name={equipment?.name}
+          icon={equipment?.icon}
           className="size-16 shrink-0"
         />
         <div className="min-w-0 flex-1">

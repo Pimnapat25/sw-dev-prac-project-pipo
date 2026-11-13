@@ -1,5 +1,6 @@
 import type { ApiResponse, Rental } from "@/types";
 import { NotFoundError, UnauthorizedError } from "@/libs/apiErrors";
+import { withIcon } from "@/libs/equipmentIcon";
 
 export default async function getRental(
   id: string,
@@ -19,5 +20,9 @@ export default async function getRental(
     throw new Error("Unable to load this rental request.");
   }
 
-  return await response.json();
+  const body: ApiResponse<Rental> = await response.json();
+  return {
+    ...body,
+    data: { ...body.data, equipment: withIcon(body.data.equipment) },
+  };
 }

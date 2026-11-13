@@ -28,7 +28,7 @@ export default function FeaturedCarousel({
   const dishes: Dish[] = equipments.map((e, i) => ({
     title: e.category,
     subtitle: e.name,
-    image: categoryImage(e.category),
+    image: categoryImage(e.category, e.name, e.icon),
     alt: `${e.category} illustration`,
     eyebrow: "Featured equipment",
     rating: e.quantity,

@@ -1,4 +1,5 @@
 import type { ApiResponse, Equipment } from "@/types";
+import { withIcon } from "@/libs/equipmentIcon";
 
 export default async function getEquipments(): Promise<
   ApiResponse<Equipment[]>
@@ -11,5 +12,6 @@ export default async function getEquipments(): Promise<
     throw new Error("Failed to fetch equipment");
   }
 
-  return await response.json();
+  const body: ApiResponse<Equipment[]> = await response.json();
+  return { ...body, data: body.data.map((e) => withIcon(e)) };
 }

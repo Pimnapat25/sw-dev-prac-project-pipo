@@ -5,6 +5,9 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import createEquipment from "@/libs/createEquipment";
 import updateEquipment from "@/libs/updateEquipment";
+import CategoryIcon from "@/components/CategoryIcon";
+import { ICON_OPTIONS } from "@/libs/categoryArt";
+import { encodeDescription } from "@/libs/equipmentIcon";
 import type { Equipment } from "@/types";
 
 export default function EquipmentForm({
@@ -21,6 +24,7 @@ export default function EquipmentForm({
   const [rentalRate, setRentalRate] = useState(
     equipment ? String(equipment.rentalRate) : "",
   );
+  const [icon, setIcon] = useState(equipment?.icon ?? "");
   const { data: session, status } = useSession();
   const router = useRouter();
   const [error, setError] = useState("");
@@ -68,7 +72,7 @@ export default function EquipmentForm({
       const equipmentData = {
         name: name.trim(),
         category: category.trim(),
-        description: description.trim(),
+        description: encodeDescription(description.trim(), icon || undefined),
         quantity: quantityNumber,
         rentalRate: rateNumber,
       };
@@ -152,6 +156,36 @@ export default function EquipmentForm({
           className="field"
         />
       </div>
+      <fieldset className="sm:col-span-2">
+        <legend className="label">Icon</legend>
+        <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-5">
+          <button
+            type="button"
+            aria-pressed={icon === ""}
+            onClick={() => setIcon("")}
+            className={`flex flex-col items-center gap-1 rounded-2xl p-2 text-xs font-semibold text-grey ${
+              icon === "" ? "bg-pink-light ring-2 ring-pink" : "bg-white/50"
+            }`}
+          >
+            <CategoryIcon category={category} name={name} className="size-12" />
+            Automatic
+          </button>
+          {ICON_OPTIONS.map((o) => (
+            <button
+              key={o.kind}
+              type="button"
+              aria-pressed={icon === o.kind}
+              onClick={() => setIcon(o.kind)}
+              className={`flex flex-col items-center gap-1 rounded-2xl p-2 text-xs font-semibold text-grey ${
+                icon === o.kind ? "bg-pink-light ring-2 ring-pink" : "bg-white/50"
+              }`}
+            >
+              <CategoryIcon category="" icon={o.kind} className="size-12" />
+              {o.label}
+            </button>
+          ))}
+        </div>
+      </fieldset>
       <div>
         <label
           htmlFor="equipment-quantity"
