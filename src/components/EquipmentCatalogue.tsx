@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import CategoryIcon from "@/components/CategoryIcon";
 import DeleteEquipmentButton from "@/components/DeleteEquipmentButton";
@@ -17,6 +17,12 @@ export default function EquipmentCatalogue({
 }) {
   const categories = ["All", ...new Set(equipments.map((e) => e.category))];
   const [selected, setSelected] = useState("All");
+  // Restore the filter after returning from the add/edit pages (they remount this list).
+  useEffect(() => {
+    const saved = sessionStorage.getItem("equipmentCategory");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (saved) setSelected(saved);
+  }, []);
   // A deleted last item removes its category; fall back to "All" instead of showing nothing.
   const current = categories.includes(selected) ? selected : "All";
   const active = categories.indexOf(current);
@@ -34,7 +40,10 @@ export default function EquipmentCatalogue({
             compact={false}
             items={categories.map((label) => ({ label, fx: "none" as const }))}
             active={active}
-            onChange={(i) => setSelected(categories[i])}
+            onChange={(i) => {
+              setSelected(categories[i]);
+              sessionStorage.setItem("equipmentCategory", categories[i]);
+            }}
             className="shrink-0"
           />
         </div>
