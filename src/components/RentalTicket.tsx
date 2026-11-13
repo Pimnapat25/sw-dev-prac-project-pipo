@@ -2,7 +2,7 @@ import Link from "next/link";
 import CategoryIcon from "@/components/CategoryIcon";
 import DeleteRentalButton from "@/components/DeleteRentalButton";
 import formatBaht from "@/libs/formatBaht";
-import { estimateTotal, rentalStatus, type RentalStatus } from "@/libs/rentalInfo";
+import { estimateTotal, formatDate, rentalStatus, type RentalStatus } from "@/libs/rentalInfo";
 import type { Rental } from "@/types";
 
 const CHIP: Record<RentalStatus, string> = {
@@ -11,7 +11,6 @@ const CHIP: Record<RentalStatus, string> = {
   Past: "bg-grey/15 text-grey",
 };
 
-const formatDate = (value: string) => value.slice(0, 10);
 
 export default function RentalTicket({
   rental,

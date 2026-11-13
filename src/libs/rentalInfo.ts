@@ -36,3 +36,9 @@ export function estimateTotal(
 export function addDays(date: string, days: number): string {
   return new Date(Date.parse(date) + days * DAY_MS).toISOString().slice(0, 10);
 }
+
+// YYYY-MM-DD (or ISO) -> DD-MM-YY for display.
+export function formatDate(value: string): string {
+  const [y, m, d] = value.slice(0, 10).split("-");
+  return y && m && d ? `${d}-${m}-${y.slice(2)}` : value;
+}

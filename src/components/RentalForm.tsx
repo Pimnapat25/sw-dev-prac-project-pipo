@@ -8,7 +8,7 @@ import Snappy from "@/components/Snappy";
 import createRental from "@/libs/createRental";
 import updateRental from "@/libs/updateRental";
 import formatBaht from "@/libs/formatBaht";
-import { addDays, estimateTotal, rentalDays } from "@/libs/rentalInfo";
+import { addDays, estimateTotal, formatDate, rentalDays } from "@/libs/rentalInfo";
 import validateRental, {
   MAX_QTY_PER_REQUEST,
   MAX_RENTAL_DAYS,
@@ -319,7 +319,7 @@ export default function RentalForm({
           <div className="flex justify-between gap-3">
             <dt>Dates</dt>
             <dd className="text-right font-semibold">
-              {startDate} to {returnDate}
+              {formatDate(startDate)} to {formatDate(returnDate)}
             </dd>
           </div>
           <div className="flex justify-between gap-3">
