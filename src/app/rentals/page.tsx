@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import getRentals from "@/libs/getRentals";
 import { UnauthorizedError } from "@/libs/apiErrors";
-import RentalTicket from "@/components/RentalTicket";
+import RentalList from "@/components/RentalList";
 import StateMessage from "@/components/StateMessage";
 import type { Rental } from "@/types";
 
@@ -87,11 +87,7 @@ export default async function RentalsPage({
           </StateMessage>
         </div>
       ) : (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {rentals.map((rental) => (
-            <RentalTicket key={rental._id} rental={rental} isAdmin={isAdmin} />
-          ))}
-        </div>
+        <RentalList rentals={rentals} isAdmin={isAdmin} />
       )}
     </main>
   );

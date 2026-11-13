@@ -8,6 +8,15 @@ import { LiquidNavbar } from "@/components/ui/liquid-glass-navbar";
 import formatBaht from "@/libs/formatBaht";
 import type { Equipment } from "@/types";
 
+type Sort = "default" | "name" | "priceLow" | "priceHigh" | "stock";
+const SORTS: Record<Sort, (a: Equipment, b: Equipment) => number> = {
+  default: () => 0,
+  name: (a, b) => a.name.localeCompare(b.name),
+  priceLow: (a, b) => a.rentalRate - b.rentalRate,
+  priceHigh: (a, b) => b.rentalRate - a.rentalRate,
+  stock: (a, b) => b.quantity - a.quantity,
+};
+
 export default function EquipmentCatalogue({
   equipments,
   role,
@@ -26,10 +35,17 @@ export default function EquipmentCatalogue({
   // A deleted last item removes its category; fall back to "All" instead of showing nothing.
   const current = categories.includes(selected) ? selected : "All";
   const active = categories.indexOf(current);
-  const visible =
-    current === "All"
-      ? equipments
-      : equipments.filter((e) => e.category === current);
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<Sort>("default");
+  const needle = query.trim().toLowerCase();
+  const visible = equipments
+    .filter((e) => current === "All" || e.category === current)
+    .filter(
+      (e) =>
+        !needle ||
+        `${e.name} ${e.category} ${e.description}`.toLowerCase().includes(needle),
+    )
+    .sort(SORTS[sort]);
 
   return (
     <>
@@ -49,7 +65,30 @@ export default function EquipmentCatalogue({
         </div>
       )}
 
-      <p className="mt-6 text-sm font-medium text-grey" aria-live="polite">
+      <div className="mt-6 flex flex-wrap gap-3">
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search equipment"
+          aria-label="Search equipment"
+          className="field max-w-xs flex-1"
+        />
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value as Sort)}
+          aria-label="Sort equipment"
+          className="field w-auto"
+        >
+          <option value="default">Sort: Default</option>
+          <option value="name">Name A–Z</option>
+          <option value="priceLow">Price: low to high</option>
+          <option value="priceHigh">Price: high to low</option>
+          <option value="stock">Most available</option>
+        </select>
+      </div>
+
+      <p className="mt-4 text-sm font-medium text-grey" aria-live="polite">
         {visible.length} {visible.length === 1 ? "item" : "items"} to browse
       </p>
 

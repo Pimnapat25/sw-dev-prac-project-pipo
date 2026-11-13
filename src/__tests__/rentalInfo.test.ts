@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   addDays,
   estimateTotal,
+  rentalCountdown,
   rentalDays,
   rentalStatus,
 } from "../libs/rentalInfo.ts";
@@ -25,3 +26,12 @@ test("total is qty x rate x days", () => {
 });
 test("addDays crosses month boundaries", () =>
   assert.equal(addDays("2026-11-28", 7), "2026-12-05"));
+
+test("countdown wording", () => {
+  assert.deepEqual(rentalCountdown("2026-11-08", "2026-11-09", now), { label: "Starts in 3 days", urgent: false });
+  assert.deepEqual(rentalCountdown("2026-11-06", "2026-11-09", now), { label: "Starts tomorrow", urgent: false });
+  assert.deepEqual(rentalCountdown("2026-11-04", "2026-11-05", now), { label: "Returns today", urgent: true });
+  assert.deepEqual(rentalCountdown("2026-11-04", "2026-11-06", now), { label: "Returns tomorrow", urgent: true });
+  assert.deepEqual(rentalCountdown("2026-11-04", "2026-11-10", now), { label: "Returns in 5 days", urgent: false });
+  assert.deepEqual(rentalCountdown("2026-11-01", "2026-11-02", now), { label: "Ended 3 days ago", urgent: false });
+});

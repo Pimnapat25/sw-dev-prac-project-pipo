@@ -42,3 +42,28 @@ export function formatDate(value: string): string {
   const [y, m, d] = value.slice(0, 10).split("-");
   return y && m && d ? `${d}-${m}-${y.slice(2)}` : value;
 }
+
+const plural = (n: number) => `${n} ${n === 1 ? "day" : "days"}`;
+
+// Short human hint for a rental card, e.g. "Returns tomorrow". `urgent` = due today/tomorrow.
+export function rentalCountdown(
+  startDate: string,
+  returnDate: string,
+  now: Date = new Date(),
+): { label: string; urgent: boolean } {
+  const today = todayBangkok(now);
+  const until = (date: string) => rentalDays(today, date);
+  const status = rentalStatus(startDate, returnDate, now);
+  if (status === "Upcoming") {
+    const n = until(startDate);
+    return { label: n === 1 ? "Starts tomorrow" : `Starts in ${plural(n)}`, urgent: false };
+  }
+  if (status === "Active") {
+    const n = until(returnDate);
+    if (n === 0) return { label: "Returns today", urgent: true };
+    if (n === 1) return { label: "Returns tomorrow", urgent: true };
+    return { label: `Returns in ${plural(n)}`, urgent: false };
+  }
+  const n = rentalDays(returnDate, today);
+  return { label: n === 1 ? "Ended yesterday" : `Ended ${plural(n)} ago`, urgent: false };
+}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import CategoryIcon from "@/components/CategoryIcon";
 import DeleteRentalButton from "@/components/DeleteRentalButton";
 import formatBaht from "@/libs/formatBaht";
-import { estimateTotal, formatDate, rentalStatus, type RentalStatus } from "@/libs/rentalInfo";
+import { estimateTotal, formatDate, rentalCountdown, rentalStatus, type RentalStatus } from "@/libs/rentalInfo";
 import type { Rental } from "@/types";
 
 const CHIP: Record<RentalStatus, string> = {
@@ -20,6 +20,7 @@ export default function RentalTicket({
   isAdmin: boolean;
 }) {
   const status = rentalStatus(rental.startDate, rental.returnDate);
+  const countdown = rentalCountdown(rental.startDate, rental.returnDate);
   const equipment = rental.equipment;
 
   return (
@@ -32,9 +33,14 @@ export default function RentalTicket({
           className="size-16 shrink-0"
         />
         <div className="min-w-0 flex-1">
-          <p className={`w-fit rounded-full px-3 py-1 text-xs font-bold ${CHIP[status]}`}>
-            {status}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <p className={`w-fit rounded-full px-3 py-1 text-xs font-bold ${CHIP[status]}`}>
+              {status}
+            </p>
+            <p className={`text-xs font-semibold ${countdown.urgent ? "text-red-600" : "text-grey"}`}>
+              {countdown.label}
+            </p>
+          </div>
           <h2 className="mt-2 break-words text-xl font-bold text-pink-dark">
             {equipment?.name ?? "Equipment unavailable"}
           </h2>
