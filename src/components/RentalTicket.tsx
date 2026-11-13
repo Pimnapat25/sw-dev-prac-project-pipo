@@ -60,10 +60,13 @@ export default function RentalTicket({
           <dt>Return</dt>
           <dd className="font-semibold">{formatDate(rental.returnDate)}</dd>
         </div>
-        {isAdmin && rental.user && (
+        {rental.user && (
           <div className="flex justify-between gap-4">
-            <dt>Requested by</dt>
-            <dd className="break-all text-right font-semibold">{rental.user.name}</dd>
+            <dt>{isAdmin ? "Requested by" : "Account"}</dt>
+            <dd className="min-w-0 text-right">
+              <span className="block font-semibold">{rental.user.name}</span>
+              <span className="block break-all text-xs">{rental.user.email}</span>
+            </dd>
           </div>
         )}
         <div className="flex items-baseline justify-between gap-4 pt-2">

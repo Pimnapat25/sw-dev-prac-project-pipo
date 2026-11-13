@@ -3,13 +3,13 @@
 // Safe to run again: existing accounts log in, existing equipment names are reused.
 //
 // Test accounts (local demo data only — not real credentials):
-//   admin:  admin@snaprent.test  / SnapAdmin#2026
+//   admin:  admin@gmail.com      / 12345678   (created in the back office, never via the website)
 //   member: member@snaprent.test / SnapMember#2026
 
 const API = process.env.API_URL ?? "http://localhost:5000/api/v1";
 
 const ACCOUNTS = {
-  admin: { name: "Snap Admin", email: "admin@snaprent.test", tel: "0800000001", password: "SnapAdmin#2026", role: "admin" },
+  admin: { email: "admin@gmail.com", password: "12345678" },
   member: { name: "Snap Member", email: "member@snaprent.test", tel: "0800000002", password: "SnapMember#2026", role: "member" },
 };
 
@@ -43,6 +43,12 @@ async function call(path, { method = "GET", token, body } = {}) {
   return { ok: res.ok, status: res.status, data };
 }
 
+async function logIn(account) {
+  const login = await call("/auth/login", { method: "POST", body: account });
+  if (!login.ok) throw new Error(`Cannot sign in ${account.email}: ${login.data.error ?? login.status}`);
+  return login.data.data.token;
+}
+
 async function signIn(account) {
   const reg = await call("/auth/register", { method: "POST", body: account });
   if (reg.ok) return reg.data.data.token;
@@ -57,7 +63,7 @@ function day(offset) {
   return d.toLocaleDateString("en-CA", { timeZone: "Asia/Bangkok" });
 }
 
-const adminToken = await signIn(ACCOUNTS.admin);
+const adminToken = await logIn(ACCOUNTS.admin);
 const memberToken = await signIn(ACCOUNTS.member);
 console.log("Signed in admin and member");
 

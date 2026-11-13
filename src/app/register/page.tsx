@@ -11,7 +11,6 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<"member" | "admin">("member");
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +33,8 @@ export default function RegisterPage() {
         email: email.trim(),
         tel: tel.trim(),
         password,
-        role,
+        // Admins are created in the back office; the website only registers members.
+        role: "member",
       });
 
       router.push("/login");
@@ -123,24 +123,6 @@ export default function RegisterPage() {
             placeholder="At least 6 characters"
             className="field"
           />
-        </div>
-        <div>
-          <label htmlFor="role" className="label">
-            Account role
-          </label>
-
-          <select
-            id="role"
-            name="role"
-            value={role}
-            onChange={(e) =>
-              setRole(e.target.value === "admin" ? "admin" : "member")
-            }
-            className="field"
-          >
-            <option value="member">Member</option>
-            <option value="admin">Admin</option>
-          </select>
         </div>
         {error && (
           <p role="alert" className="alert">

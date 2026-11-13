@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import userLogout from "@/libs/userLogout";
 import {
   LiquidNavbar,
   NimbusIcons,
@@ -79,6 +80,12 @@ export default function MainNav({
       (item.path === "/" ? current === "/" : current.startsWith(item.path)),
   );
 
+  const { data: session } = useSession();
+  const signOutEverywhere = async () => {
+    if (session?.user.token) await userLogout(session.user.token);
+    await signOut({ callbackUrl: "/" });
+  };
+
   return (
     <div className="pointer-events-none sticky top-3 z-50 flex items-center justify-center gap-3 px-3 pt-3">
       <div className="pointer-events-auto">
@@ -89,7 +96,7 @@ export default function MainNav({
           onChange={(_, item) => {
             const target = (item as NavItem).path;
             if (target) router.push(target);
-            else signOut({ callbackUrl: "/" });
+            else signOutEverywhere();
           }}
         />
       </div>
