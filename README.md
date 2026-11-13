@@ -90,12 +90,6 @@ Optional: with the backend running locally, `node scripts/seed.mjs` adds demo eq
     └── __tests__/        Unit tests
 ```
 
-## How it fits together
-
-1. The user logs in. NextAuth sends the credentials to the API and stores the returned token in the session.
-2. Pages in `src/libs` call the API with that token in the `Authorization` header.
-3. The API checks the token and the user's role (`admin` or `member`) before it reads or changes data.
-
 ## Deployment
 
 - **Frontend:** Vercel. Set the three environment variables above.
