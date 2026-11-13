@@ -43,7 +43,7 @@ export function formatDate(value: string): string {
   return y && m && d ? `${d}-${m}-${y.slice(2)}` : value;
 }
 
-// "Returns in 3 days" for active rentals due within 3 days; null otherwise.
+// Days-to-return hint for every active rental; null otherwise.
 export function rentalCountdown(
   startDate: string,
   returnDate: string,
@@ -51,5 +51,5 @@ export function rentalCountdown(
 ): string | null {
   if (rentalStatus(startDate, returnDate, now) !== "Active") return null;
   const n = rentalDays(todayBangkok(now), returnDate);
-  return n >= 1 && n <= 3 ? `Returns in ${n} ${n === 1 ? "day" : "days"}` : null;
+  return n === 0 ? "Returns today" : `Returns in ${n} ${n === 1 ? "day" : "days"}`;
 }

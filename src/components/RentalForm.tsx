@@ -259,8 +259,7 @@ export default function RentalForm({
 
         {step === 2 && (
           <p className="mt-6 rounded-2xl bg-white/60 p-4 text-base leading-7 text-grey">
-            Check the summary, then send your request. Submitting does not
-            change the available quantity.
+            Check the summary, then send your request.
           </p>
         )}
 
