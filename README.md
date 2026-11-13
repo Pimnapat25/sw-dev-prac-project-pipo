@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CU Snappy
 
-## Getting Started
+CU Snappy is an equipment rental web app. Members browse a catalogue of cameras, projectors, notebooks and sports gear, then request to borrow items for a date range. Admins manage the equipment list. The friendly camera mascot is called Snappy.
 
-First, run the development server:
+This repository is the **frontend**. It talks to a separate REST API (Express + MongoDB) that stores the data and handles login.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- Register, log in and log out
+- Equipment catalogue with search, sorting and category filters
+- Rental requests: create, edit and delete, filter by status
+- Return countdown on active rentals
+- Admin-only equipment create, edit and delete
+- Loading, error and not-found states on every main route
+
+## Tech stack
+
+| Area | Tool |
+|---|---|
+| Framework | Next.js 16 (App Router), React 19 |
+| Language | TypeScript |
+| Styling | Tailwind CSS 4 |
+| Auth | NextAuth.js 4 (credentials login against the API, JWT session) |
+| Animation | GSAP |
+| Tests | Node built-in test runner |
+| Backend | Express + MongoDB Atlas (separate repo) |
+
+## Run the frontend
+
+You need Node.js 20 or newer and a running backend API.
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Create `.env.local` in the project root:
+   ```
+   NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=<any long random string>
+   ```
+   Point `NEXT_PUBLIC_API_URL` at the deployed API instead to use production data.
+3. Start the dev server:
+   ```bash
+   npm run dev
+   ```
+4. Open http://localhost:3000.
+
+Optional: with the backend running locally, `node scripts/seed.mjs` adds demo equipment and rentals.
+
+### Other commands
+
+| Command | What it does |
+|---|---|
+| `npm run build` | Production build |
+| `npm start` | Serve the production build |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run unit tests |
+
+## Environment variables
+
+| Name | Purpose |
+|---|---|
+| `NEXT_PUBLIC_API_URL` | Base URL of the backend API, including `/api/v1`. It is public by design. |
+| `NEXTAUTH_URL` | The URL this site is served from |
+| `NEXTAUTH_SECRET` | Secret used to sign sessions. Keep it private and use a different value in production. |
+
+## Folder structure
+
+```
+.
+├── public/               Static files
+├── scripts/
+│   └── seed.mjs          Fills the local backend with demo data
+├── docs/                 Planning notes
+└── src/
+    ├── app/              Routes and layouts (App Router)
+    │   ├── api/auth/     NextAuth handler and options
+    │   ├── equipment/    Catalogue, add and edit pages
+    │   ├── rentals/      Rental list, create and edit pages
+    │   ├── login/        Login page
+    │   ├── register/     Register page
+    │   ├── layout.tsx    Root layout, page title and session provider
+    │   └── icon.svg      Tab icon (Snappy)
+    ├── components/       Reusable UI (forms, nav, cards, mascot)
+    │   └── ui/           Carousel and navbar building blocks
+    ├── libs/             API calls and small helpers
+    ├── providers/        React context providers
+    ├── types/            Shared TypeScript types
+    └── __tests__/        Unit tests
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How it fits together
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. The user logs in. NextAuth sends the credentials to the API and stores the returned token in the session.
+2. Pages in `src/libs` call the API with that token in the `Authorization` header.
+3. The API checks the token and the user's role (`admin` or `member`) before it reads or changes data.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend:** Vercel. Set the three environment variables above.
+- **Backend:** Render, with MongoDB Atlas as the database. Its `FRONTEND_URL` setting must exactly match the Vercel URL, with no trailing slash, or the browser blocks the requests (CORS).

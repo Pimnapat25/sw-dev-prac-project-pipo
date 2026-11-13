@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Snap Rent - Equipment Rental",
+  title: "CU Snappy - Equipment Rental",
   description: "Borrow cameras, projectors, notebooks and sports gear.",
 };
 
