@@ -23,6 +23,6 @@ export default async function getRental(
   const body: ApiResponse<Rental> = await response.json();
   return {
     ...body,
-    data: { ...body.data, equipment: withIcon(body.data.equipment) },
+    data: body.data && { ...body.data, equipment: withIcon(body.data.equipment) },
   };
 }

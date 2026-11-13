@@ -11,7 +11,6 @@ const CHIP: Record<RentalStatus, string> = {
   Past: "bg-grey/15 text-grey",
 };
 
-
 export default function RentalTicket({
   rental,
   isAdmin,
@@ -38,7 +37,7 @@ export default function RentalTicket({
               {status}
             </p>
             {countdown && (
-              <p className="text-xs font-semibold text-red-600">{countdown}</p>
+              <p className="text-xs font-semibold text-pink-dark">{countdown}</p>
             )}
           </div>
           <h2 className="mt-2 break-words text-xl font-bold text-pink-dark">

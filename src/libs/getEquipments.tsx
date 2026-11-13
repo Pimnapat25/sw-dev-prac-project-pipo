@@ -13,5 +13,5 @@ export default async function getEquipments(): Promise<
   }
 
   const body: ApiResponse<Equipment[]> = await response.json();
-  return { ...body, data: body.data.map((e) => withIcon(e)) };
+  return { ...body, data: (body.data ?? []).map((e) => withIcon(e)) };
 }

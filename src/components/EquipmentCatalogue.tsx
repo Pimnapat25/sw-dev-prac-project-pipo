@@ -28,7 +28,11 @@ export default function EquipmentCatalogue({
   const [selected, setSelected] = useState("All");
   // Restore the filter after returning from the add/edit pages (they remount this list).
   useEffect(() => {
-    const saved = sessionStorage.getItem("equipmentCategory");
+    let saved: string | null = null;
+    try {
+      saved = sessionStorage.getItem("equipmentCategory");
+    } catch {} // storage blocked (e.g. private mode): keep "All"
+    // sessionStorage is client-only, so it must be read after mount.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved) setSelected(saved);
   }, []);
@@ -58,7 +62,9 @@ export default function EquipmentCatalogue({
             active={active}
             onChange={(i) => {
               setSelected(categories[i]);
-              sessionStorage.setItem("equipmentCategory", categories[i]);
+              try {
+                sessionStorage.setItem("equipmentCategory", categories[i]);
+              } catch {}
             }}
             className="shrink-0"
           />

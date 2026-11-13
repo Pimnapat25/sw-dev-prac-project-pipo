@@ -229,7 +229,7 @@ export function categoryArt(category: string, name?: string, icon?: string): str
   return ART[itemKind(category, name, icon)];
 }
 
-// Icons an admin can pick for a piece of equipment ("" = automatic).
+// Icons an admin can pick for a piece of equipment (the form adds an "Automatic" choice).
 export const ICON_OPTIONS: { kind: CategoryKind; label: string }[] = [
   { kind: "camera", label: "Camera" },
   { kind: "actioncam", label: "Action cam" },

@@ -371,7 +371,6 @@ export function DishOrbitCarousel({
       trigger.kill()
       stRef.current = null
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [steps, loop, n])
 
   const go = (to: number, dir?: 1 | -1) => {

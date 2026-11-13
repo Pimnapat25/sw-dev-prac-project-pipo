@@ -18,6 +18,6 @@ export default async function getRentals(
   const body: ApiResponse<Rental[]> = await response.json();
   return {
     ...body,
-    data: body.data.map((r) => ({ ...r, equipment: withIcon(r.equipment) })),
+    data: (body.data ?? []).map((r) => ({ ...r, equipment: withIcon(r.equipment) })),
   };
 }
