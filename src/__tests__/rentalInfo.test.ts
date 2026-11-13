@@ -27,11 +27,11 @@ test("total is qty x rate x days", () => {
 test("addDays crosses month boundaries", () =>
   assert.equal(addDays("2026-11-28", 7), "2026-12-05"));
 
-test("countdown wording", () => {
-  assert.deepEqual(rentalCountdown("2026-11-08", "2026-11-09", now), { label: "Starts in 3 days", urgent: false });
-  assert.deepEqual(rentalCountdown("2026-11-06", "2026-11-09", now), { label: "Starts tomorrow", urgent: false });
-  assert.deepEqual(rentalCountdown("2026-11-04", "2026-11-05", now), { label: "Returns today", urgent: true });
-  assert.deepEqual(rentalCountdown("2026-11-04", "2026-11-06", now), { label: "Returns tomorrow", urgent: true });
-  assert.deepEqual(rentalCountdown("2026-11-04", "2026-11-10", now), { label: "Returns in 5 days", urgent: false });
-  assert.deepEqual(rentalCountdown("2026-11-01", "2026-11-02", now), { label: "Ended 3 days ago", urgent: false });
+test("countdown only for active rentals returning in 1-3 days", () => {
+  assert.equal(rentalCountdown("2026-11-04", "2026-11-06", now), "Returns in 1 day");
+  assert.equal(rentalCountdown("2026-11-04", "2026-11-08", now), "Returns in 3 days");
+  assert.equal(rentalCountdown("2026-11-04", "2026-11-05", now), null);
+  assert.equal(rentalCountdown("2026-11-04", "2026-11-09", now), null);
+  assert.equal(rentalCountdown("2026-11-06", "2026-11-07", now), null);
+  assert.equal(rentalCountdown("2026-11-01", "2026-11-02", now), null);
 });

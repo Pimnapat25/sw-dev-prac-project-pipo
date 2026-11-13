@@ -50,7 +50,7 @@ export default function EquipmentCatalogue({
   return (
     <>
       {categories.length > 2 && (
-        <div className="mt-8 flex max-w-full justify-start overflow-x-auto pb-2">
+        <div className="mt-8 flex max-w-full justify-start overflow-x-auto overflow-y-hidden px-1 pb-5 -mb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <LiquidNavbar
             tone="light"
             compact={false}

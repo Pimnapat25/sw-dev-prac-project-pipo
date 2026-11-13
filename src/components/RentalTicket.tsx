@@ -37,9 +37,9 @@ export default function RentalTicket({
             <p className={`w-fit rounded-full px-3 py-1 text-xs font-bold ${CHIP[status]}`}>
               {status}
             </p>
-            <p className={`text-xs font-semibold ${countdown.urgent ? "text-red-600" : "text-grey"}`}>
-              {countdown.label}
-            </p>
+            {countdown && (
+              <p className="text-xs font-semibold text-red-600">{countdown}</p>
+            )}
           </div>
           <h2 className="mt-2 break-words text-xl font-bold text-pink-dark">
             {equipment?.name ?? "Equipment unavailable"}
