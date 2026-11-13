@@ -1,4 +1,4 @@
-import type { ApiResponse, AuthData, RegisterInput } from "@/types";
+import type { ApiError, ApiResponse, AuthData, RegisterInput } from "@/types";
 
 export default async function userRegister(
   user: RegisterInput,
@@ -18,7 +18,8 @@ export default async function userRegister(
 
   if (!response.ok) {
     throw new Error(
-      "Unable to register. Please check your details and try again.",
+      (data as ApiError).error ||
+        "Unable to register. Please check your details and try again.",
     );
   }
 

@@ -54,7 +54,7 @@ export default function DeleteEquipmentButton({
         type="button"
         onClick={handleDelete}
         disabled={loading || status === "loading"}
-        className="min-h-11 cursor-pointer rounded-full border border-red-200 px-5 py-2 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="btn btn-danger"
       >
         {loading ? "Deleting…" : "Delete"}
       </button>

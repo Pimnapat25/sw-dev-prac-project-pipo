@@ -60,6 +60,8 @@ export interface Equipment {
   quantity: number;
   rentalRate: number;
   isActive: boolean;
+  /** Chosen illustration (see libs/equipmentIcon). */
+  icon?: string;
   createdAt: string;
   updatedAt: string;
 }

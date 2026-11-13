@@ -1,4 +1,4 @@
-import type { ApiResponse, Equipment, EquipmentInput } from "@/types";
+import type { ApiError, ApiResponse, Equipment, EquipmentInput } from "@/types";
 
 export default async function createEquipment(
   equipment: EquipmentInput,
@@ -17,7 +17,8 @@ export default async function createEquipment(
 
   if (!response.ok) {
     throw new Error(
-      "Unable to add equipment. Please check your details and admin access.",
+      (data as ApiError).error ||
+        "Unable to add equipment. Please check your details and admin access.",
     );
   }
 
