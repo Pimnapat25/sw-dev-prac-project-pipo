@@ -16,7 +16,9 @@ const INK = "#58595B";
 // Scalloped fur outline: little circles around the body, covered by a fill.
 const FUR = Array.from({ length: 20 }, (_, i) => {
   const a = (i / 20) * Math.PI * 2;
-  return { x: 100 + Math.cos(a) * 64, y: 106 + Math.sin(a) * 52 };
+  // Rounded so server and browser render identical attributes (no hydration mismatch).
+  const r = (v: number) => Math.round(v * 100) / 100;
+  return { x: r(100 + Math.cos(a) * 64), y: r(106 + Math.sin(a) * 52) };
 });
 
 const OUTLINE = { stroke: INK, strokeWidth: 3, strokeLinecap: "round" } as const;
